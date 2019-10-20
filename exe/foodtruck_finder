@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "foodtruck_finder"
+FoodtruckFinder::CLI.start(ARGV)
