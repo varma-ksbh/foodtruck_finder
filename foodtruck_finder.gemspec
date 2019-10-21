@@ -41,4 +41,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
 
   spec.add_dependency "thor", "~> 0.20"
+  spec.add_dependency "soda-ruby", "~> 1.0.0"
 end
