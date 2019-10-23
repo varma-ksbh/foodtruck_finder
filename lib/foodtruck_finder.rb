@@ -1,4 +1,5 @@
 require 'thor'
+require 'fileutils'
 
 require_relative 'foodtruck_finder/configure'
 require_relative 'foodtruck_finder/version'
@@ -16,6 +17,9 @@ module FoodtruckFinder
       super(args, local_options, config)
       load_configs!
       @foodtruck_dao = FoodtruckDao.new(@config['token'])
+
+      # create log file for debugging
+      FileUtils.touch(LOG_FILE)
     end
 
     desc "configure", "provide configuration"
@@ -31,20 +35,23 @@ module FoodtruckFinder
     LONGDESC
     subcommand "configure", Configure
 
-    desc "foodtruck [truck_identifier]", "returns the food truck with the identifier"
-    def foodtruck(identifier)
-      foodtruck_hash = @foodtruck_dao.get_foodtruck(identifier)
-      foodtruck = Foodtruck.new(foodtruck_hash)
-      puts foodtruck.name
-      ask "Need more records?"
-      puts "fuck no more!"
-    end
-
-    desc "current_available_foodtrucks", "current available trucks"
-    method_option 'page-size', type: :numeric, :default => 10, aliases: :"-n"
-    method_option 'starting-token', type: :string, aliases: :"-t"
+    desc "current_available_foodtrucks", "Foodtrucks that are open now!"
+    method_option 'page_size', type: :numeric, :default => 10, aliases: :"-n"
+    method_option 'starting_token', type: :string, :default => 0, aliases: :"-t"
     def current_available_foodtrucks
-      puts 'hey'
+      loop do
+        begin
+          foodtrucks = @foodtruck_dao.available_foodtrucks_at_this_moment(@options['starting_token'], @options['page_size'])
+        rescue DependencyException => e
+          say e.message, :red 
+          exit 1
+        end
+        
+        say foodtrucks[0], :green
+        break if foodtrucks.size < @options['page_size']
+        needmore = ask("Need more Foodtrucks?", :limited_to => ['Y', 'N'], color: :yellow)
+        break unless needmore == 'Y'
+      end
     end
 
     private ###############################

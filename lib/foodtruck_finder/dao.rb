@@ -1,26 +1,39 @@
 require 'soda'
+require 'logger'
 require_relative 'constants'
+require_relative 'exceptions'
 
 module FoodtruckFinder
   class FoodtruckDao
-    include Constants
+    include Constants 
+    @@logger = Logger.new LOG_FILE
+
     def initialize(client = nil, app_token = nil)
       @client = client || SODA::Client.new(
-        doman: SOCRATA_DOMAIN,
         app_token: app_token
       )
     end
 
-    def get_foodtruck(id)
-      response = @client.get("https://data.sfgov.org/resource/jjew-r69b.json")
-      # puts response.body[0]
-      # puts "starttime: #{response.body[0]['start24']}, endtime: #{response.body[0]['end24']}"
-      # ask "need more records??"
-      return "starttime: #{response.body[1]['start24']}, endtime: #{response.body[0]['end24']}"
-    end
+    def available_foodtrucks_at_this_moment(offset, limit)
+      time = Time.new
+      currentTime = "#{time.hour}:#{time.min}"
 
-    def available_foodtrucks_at_this_moment
-
+      query = {
+        "$limit" => limit,
+        "$offset" => offset,
+        "$where" => "dayorder = #{time.wday} AND start24 <= '#{currentTime}' AND end24 >= '#{currentTime}'"
+      }
+      @@logger.debug("Querying Server with URL: #{SOCRATA_FOODTRUCK_URL} and QUERY: #{query}")
+      
+      begin
+        response = @client.get(SOCRATA_FOODTRUCK_URL, query)
+      rescue Exception => e
+        @@logger.fatal("Failed to fetch data from Server!")
+        @@logger.fatal(e)
+        raise DependencyException
+      end
+      
+      return response.body
     end
   end 
 end

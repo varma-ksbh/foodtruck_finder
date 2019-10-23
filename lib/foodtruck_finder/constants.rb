@@ -1,4 +1,9 @@
+require 'tmpdir'
+require 'logger'
+
 module FoodtruckFinder::Constants
-  CONFIG_FILE = "#{Dir.home}/.foodtruck_finder"
-  SOCRATA_DOMAIN = 'data.sfgov.org'
+  SOCRATA_FOODTRUCK_URL = 'https://data.sfgov.org/resource/jjew-r69b.json'
+
+  CONFIG_FILE = File.join(Dir.home, ".foodtruck-finder.config")
+  LOG_FILE = File.join(Dir.tmpdir(), "foodtruck-finder.log")
 end
