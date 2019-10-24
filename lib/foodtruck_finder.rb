@@ -19,6 +19,7 @@ module FoodtruckFinder
 
       # create log file for debugging
       FileUtils.touch(LOG_FILE)
+      say WELCOME_MESSAGE, :yellow
     end
 
     desc "configure", "provide configuration"
@@ -34,7 +35,7 @@ module FoodtruckFinder
     LONGDESC
     subcommand "configure", Configure
 
-    desc "current_available_foodtrucks", "Foodtrucks that are open now!"
+    desc "current_available_foodtrucks", "foodtrucks that are open now!"
     method_option 'page_size', type: :numeric, :default => 10, aliases: :"-n"
     method_option 'starting_token', type: :string, :default => 0, aliases: :"-t"
     def current_available_foodtrucks
