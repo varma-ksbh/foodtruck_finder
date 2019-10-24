@@ -3,6 +3,7 @@ require 'yaml'
 require_relative 'constants'
 
 module FoodtruckFinder
+  # SubCommand to save application token to config file
   class Configure < Thor
     include Constants
 
