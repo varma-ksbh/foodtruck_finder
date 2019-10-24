@@ -9,19 +9,18 @@ Gem::Specification.new do |spec|
   spec.authors       = ["varma-ksbh"]
   spec.email         = ["varma.ksbh7@gmail.com"]
 
-  spec.summary       = %q{Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
-  spec.homepage      = "https://www.homepage.com"
+  spec.summary       = %q{foodtruck_finder to find foodtrucks near you!}
+  spec.homepage      = "https://github.com/varma-ksbh"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "http://mygemserver.com"
+    spec.metadata["allowed_push_host"] = "https://github.com/varma-ksbh"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://www.mygit.com"
-    spec.metadata["changelog_uri"] = "https://www.mygit.com"
+    spec.metadata["source_code_uri"] = "https://github.com/varma-ksbh/foodtruck_finder"
+    spec.metadata["changelog_uri"] = "https://github.com/varma-ksbh/foodtruck_finder"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
