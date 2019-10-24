@@ -4,6 +4,7 @@ PATH
     foodtruck_finder (0.1.0)
       irb (~> 0.9.6)
       soda-ruby (~> 1.0.0)
+      terminal-table (~> 1.8)
       thor (~> 0.20)
 
 GEM
@@ -34,7 +35,10 @@ GEM
       sys-uname (~> 1.0.2)
     sys-uname (1.0.4)
       ffi (>= 1.0.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.20.3)
+    unicode-display_width (1.6.0)
 
 PLATFORMS
   ruby

@@ -15,7 +15,7 @@ module FoodtruckFinder
       current_config["token"] = token_key
 
       File.write(CONFIG_FILE, current_config.to_yaml)
-      puts "Token saved at: #{CONFIG_FILE}"
+      say "Token saved at: #{CONFIG_FILE}", :green
     end
   end
 end

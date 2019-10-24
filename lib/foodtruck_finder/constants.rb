@@ -6,4 +6,7 @@ module FoodtruckFinder::Constants
 
   CONFIG_FILE = File.join(Dir.home, ".foodtruck-finder.config")
   LOG_FILE = File.join(Dir.tmpdir(), "foodtruck-finder.log")
+
+  OPEN_FOODTRUCK_DISPLAY_KEYS = ['applicant', 'location']
+  OPEN_FOODTRUCK_DISPLAY_TITLE = 'Foodtrucks currently open in San Franciso'
 end

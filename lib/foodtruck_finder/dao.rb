@@ -12,6 +12,7 @@ module FoodtruckFinder
       @client = client || SODA::Client.new(
         app_token: app_token
       )
+      @@logger.debug("Initializing SODA Client with app_token #{app_token}")
     end
 
     def available_foodtrucks_at_this_moment(offset, limit)
@@ -21,7 +22,8 @@ module FoodtruckFinder
       query = {
         "$limit" => limit,
         "$offset" => offset,
-        "$where" => "dayorder = #{time.wday} AND start24 <= '#{currentTime}' AND end24 >= '#{currentTime}'"
+        "$where" => "dayorder = #{time.wday} AND start24 <= '#{currentTime}' AND end24 >= '#{currentTime}'",
+        "$order" => "applicant ASC"
       }
       @@logger.debug("Querying Server with URL: #{SOCRATA_FOODTRUCK_URL} and QUERY: #{query}")
       
